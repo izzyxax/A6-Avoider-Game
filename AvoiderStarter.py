@@ -87,8 +87,8 @@ def main():
         print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
 
         # Render text to the screen
-        label = myfont.render("By David!", True, (255,255,0))
-        screen.blit(label, (20,20))
+        label = myfont.render("By: Isabella and Zach", True, (255,255,0))
+        screen.blit(label, (607,800))
         
         # Bring drawn changes to the front
         pygame.display.update()

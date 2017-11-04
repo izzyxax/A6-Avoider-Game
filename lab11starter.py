@@ -20,8 +20,7 @@ def main():
                              
     # Initialize pygame                                 
     pygame.init()
-
-    # The map tile width/height specifies how big the window is in tiles
+   # The map tile width/height specifies how big the window is in tiles
     map_tile_width = 25
     map_tile_height = 25
     tile_size = 32 # the dimensions of the tile in pixels

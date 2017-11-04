@@ -22,8 +22,8 @@ def main():
     pygame.init()
 
     # The map tile width/height specifies how big the window is in tiles
-    map_tile_width = 30
-    map_tile_height = 20
+    map_tile_width = 25
+    map_tile_height = 25
     tile_size = 32 # the dimensions of the tile in pixels
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
     screen = pygame.display.set_mode(screen_size)

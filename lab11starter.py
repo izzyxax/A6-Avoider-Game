@@ -31,7 +31,7 @@ def main():
     myfont = pygame.font.SysFont("monospace", 24)
 
     # create the hero character
-    hero = load_piskell_sprite("images/hero",21)
+    hero = load_piskell_sprite("images/hero",12)
     hero_rect = hero[0].get_rect()
     hero_rect.center = (width/2, height/2)
     

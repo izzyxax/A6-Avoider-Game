@@ -39,8 +39,10 @@ def main():
 
     # Load in the background image
     map = pygame.image.load("BG.png")
+
     # Store window width and height in different forms for easy access
     map_size = map.get_size()
+
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     map_rect = map.get_rect()
     
@@ -61,24 +63,63 @@ def main():
     # is_alive means that the game loop should continue. Winning or losing the game sets is_alive to False.
     is_alive = True
 
+    #Hero: Load Hero/Getting Rect.
+    hero_sprite = load_piskell_sprite("Hero",4)
+    hero_sprite_rect = hero_sprite[0].get_rect()
+    hero_sprite_rect.center = (width/2, heigh/2)
+    print(hero_sprite)
+
+    #Enemy 1: Load Enemy/Getting Rect.
+    enemy1_sprite = load_piskell_sprite("Wagon",4)
+    enemy1_sprite_rect = enemy1_sprite[0].get_rect()
+    enemy1_sprite_rect.center = (width/2, height/2)
+    print(enemy1_sprite)
+
+    #Speed Of Character: Higher the number faster it goes per pixel/square
+    speed = 5
+
+    #FPS for Sprite
+    frame_number = 0
+
+
+
+
+
     # Loop while the player is still active
     while is_alive:
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_alive = False
+        #Can't Spam Key Press it one by one: Hero Movement
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    hero_sprite_rect.move_ip(-speed,0)
+                    frame_number += 1
+                if event.key == pygame.K_RIGHT:
+                    hero_sprite_rect.move_ip(0,speed)
+                    frame_number += 1
+                if event.key == pygame.K_UP:
+                    hero_sprite_rect.move_ip(0,speed)
+                    frame_number += 1
+            if frame_number >= len(hero_sprite):
+                frame_number = 0
+                    
 
         screen.blit(map, map_rect)
 
         # This grabs the current color under the cursor from the screen. Note that anything
         # drawn on the screen before this statement adds to the color. I could have also
         # taken the color from the map if I just wanted that.
-        cursor_color = screen.get_at(pygame.mouse.get_pos())
+
+        #cursor_color = screen.get_at(pygame.mouse.get_pos())
+
         # Note that the color has 4 values - the 4th is alpha. If you want to compare colors
         # make sure that you compare all the values. An example would be
         # cursor_color == (255, 0, 0, 255)
         # to see if the cursor is over a pure red area.
-        print("Color:", cursor_color)
+
+        #print("Color:", cursor_color)
 
         # You may have sprites with different numbers of frames. We can make cycles
         # of different lengths by using mod on the frame_count. This is easier than

@@ -18,7 +18,8 @@ def load_piskell_sprite(sprite_folder_name, number_of_frames):
 # This function moves rect slowly between start_pos and end_pos. The num_frame parameter
 # says how many frames of animation are needed to do the bounce, so a bigger number means
 # the rect moves slower. frame_count is the current overall frame count from the game.
-def bounce_rect_between_two_positions( rect, start_pos, end_pos, num_frame, frame_count ):
+
+#def bounce_rect_between_two_positions( rect, start_pos, end_pos, num_frame, frame_count ):
     if frame_count%num_frame < num_frame/2:
         new_pos_x = start_pos[0] + (end_pos[0] - start_pos[0]) * (frame_count%(num_frame/2))/(num_frame/2)
         new_pos_y = start_pos[1] + (end_pos[1] - start_pos[1]) * (frame_count%(num_frame/2))/(num_frame/2)
@@ -64,16 +65,13 @@ def main():
     is_alive = True
 
     #Hero: Load Hero/Getting Rect.
-    hero_sprite = load_piskell_sprite("Hero",4)
-    hero_sprite_rect = hero_sprite[0].get_rect()
-    hero_sprite_rect.center = (width/2, heigh/2)
-    print(hero_sprite)
-
+    hero = load_piskell_sprite("Hero",4)
+    hero_rect = hero[0].get_rect()
+    print(hero)
     #Enemy 1: Load Enemy/Getting Rect.
-    enemy1_sprite = load_piskell_sprite("Wagon",4)
-    enemy1_sprite_rect = enemy1_sprite[0].get_rect()
-    enemy1_sprite_rect.center = (width/2, height/2)
-    print(enemy1_sprite)
+    enemy1 = load_piskell_sprite("Wagon",4)
+    enemy1_rect = enemy1[0].get_rect()
+    print(enemy1)
 
     #Speed Of Character: Higher the number faster it goes per pixel/square
     speed = 5
@@ -91,28 +89,37 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_alive = False
+            
         #Can't Spam Key Press it one by one: Hero Movement
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    hero_sprite_rect.move_ip(-speed,0)
+                    hero_rect.move_ip(-speed,0)
                     frame_number += 1
                 if event.key == pygame.K_RIGHT:
-                    hero_sprite_rect.move_ip(0,speed)
+                    hero_rect.move_ip(0,speed)
                     frame_number += 1
                 if event.key == pygame.K_UP:
-                    hero_sprite_rect.move_ip(0,speed)
+                    hero_rect.move_ip(0,speed)
                     frame_number += 1
-            if frame_number >= len(hero_sprite):
+                if event.key == pygame.K_DOWN:
+                    hero_rect.move_ip(0,-speed)
+                    frame_number += 1
+            if frame_number >= len(hero):
                 frame_number = 0
+            
                     
 
-        screen.blit(map, map_rect)
+        screen.blit(map, map_rect, hero, hero_rect)
 
+
+
+#This Code uses a mouse as the character
+        
         # This grabs the current color under the cursor from the screen. Note that anything
         # drawn on the screen before this statement adds to the color. I could have also
         # taken the color from the map if I just wanted that.
 
-        #cursor_color = screen.get_at(pygame.mouse.get_pos())
+       # cursor_color = screen.get_at(pygame.mouse.get_pos())
 
         # Note that the color has 4 values - the 4th is alpha. If you want to compare colors
         # make sure that you compare all the values. An example would be
@@ -120,6 +127,9 @@ def main():
         # to see if the cursor is over a pure red area.
 
         #print("Color:", cursor_color)
+
+
+
 
         # You may have sprites with different numbers of frames. We can make cycles
         # of different lengths by using mod on the frame_count. This is easier than

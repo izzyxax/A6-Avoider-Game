@@ -83,6 +83,10 @@ def main():
     enemy2 = load_piskell_sprite("Wagon","sprite_",4)
     enemy2_rect = enemy2[0].get_rect()
     enemy2_rect.midleft = (0, 400)
+    #print(enemy3)
+    enemy3 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy3_rect = enemy3[0].get_rect()
+    enemy3_rect.midleft = (0, 450)
 
     #Speed Of Character: Higher the number faster it goes per pixel/square
     speed = 5
@@ -132,6 +136,11 @@ def main():
         if (enemy2_rect.x > width):
             enemy2_rect.center = (0, (height)- 30)
 
+        enemy3_rect.move_ip(speed + 7,0)
+        if (enemy3_rect.x > width):
+            enemy3_rect.center = (0, (height)- 40)
+
+
         #Collider
 
         #if hero.rect.colliderect(enemy1_rect, enemy2_rect):
@@ -144,6 +153,7 @@ def main():
         screen.blit(hero[frame_number%len(hero)], hero_rect)
         screen.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
         screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
+        screen.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
 
 
 #This Code uses a mouse as the character

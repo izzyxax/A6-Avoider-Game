@@ -50,7 +50,8 @@ def main():
     
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
-    
+
+    world = world.covert()
     # The frame_count counts all the frames that have passed since the start of the game.
     # Look at the print statements in the loop to see how to use the count with a mod function
     # to get cycles of different lengths.
@@ -95,6 +96,11 @@ def main():
     yellow = (255,255,0)
     red = (255,0,0)
     white = (255,255,255)
+
+    #Colour ment for transparency
+    transparent_wall = (255,255,255,0)
+
+
     
     #Live counter
    # for living in range(lives):
@@ -144,23 +150,6 @@ def main():
         screen.blit(hero[frame_number%len(hero)], hero_rect)
         screen.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
         screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
-
-
-#This Code uses a mouse as the character
-        
-        # This grabs the current color under the cursor from the screen. Note that anything
-        # drawn on the screen before this statement adds to the color. I could have also
-        # taken the color from the map if I just wanted that.
-
-       # cursor_color = screen.get_at(pygame.mouse.get_pos())
-
-        # Note that the color has 4 values - the 4th is alpha. If you want to compare colors
-        # make sure that you compare all the values. An example would be
-        # cursor_color == (255, 0, 0, 255)
-        # to see if the cursor is over a pure red area.
-
-        #print("Color:", cursor_color)
-
 
 
 

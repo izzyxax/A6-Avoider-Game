@@ -39,7 +39,7 @@ def main():
     myfont = pygame.font.SysFont("monospace", 24)
 
     # Load in the background image
-    world = pygame.image.load("images/BG.png")
+    world = pygame.image.load("BG.png")
     #Big_rect = world.get_rect()
 
     # Store window width and height in different forms for easy access
@@ -69,19 +69,20 @@ def main():
     map_tile_height = 20
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
-    #Hero: Load Hero/Getting Rect.
-    hero = load_piskell_sprite("images/Hero", "sprite_",4)
+
+       #Hero: Load Hero/Getting Rect.
+    hero = load_piskell_sprite("Hero", "sprite_",4)
     hero_rect = hero[0].get_rect()
-    hero_rect.center = (width/2, height/2)
+    hero_rect.midbottom = (500,800)
     #print(hero)
     #Enemy 1: Load Enemy/Getting Rect.
-    enemy1 = load_piskell_sprite("images/Wagon","Wagon",4)
+    enemy1 = load_piskell_sprite("Wagon","sprite_",4)
     enemy1_rect = enemy1[0].get_rect()
-    enemy1_rect.center = (0, height/2)
+    enemy1_rect.midleft = (0,600)
     #print(enemy1)
-    enemy2 = load_piskell_sprite("images/Wagon","Wagon",4)
+    enemy2 = load_piskell_sprite("Wagon","sprite_",4)
     enemy2_rect = enemy2[0].get_rect()
-    enemy2_rect.center = (0, (height/2)-20)
+    enemy2_rect.midleft = (0, 400)
 
     #Speed Of Character: Higher the number faster it goes per pixel/square
     speed = 5
@@ -89,9 +90,15 @@ def main():
     #FPS for Sprite
     frame_number = 0
 
+    #Colours
 
-
-
+    yellow = (255,255,0)
+    red = (255,0,0)
+    white = (255,255,255)
+    
+    #Live counter
+   # for living in range(lives):
+   #     size_of_screen = screen.get_rect().width
 
     # Loop while the player is still active
     while is_alive:
@@ -119,11 +126,17 @@ def main():
 
         enemy1_rect.move_ip(speed,0)
         if (enemy1_rect.x > width):
-            enemy1_rect.center = (0, height/2)
+            enemy1_rect.center = (0, height + 60)
         
-        enemy2_rect.move_ip(speed*2,0)
+        enemy2_rect.move_ip(speed + 5,0)
         if (enemy2_rect.x > width):
-            enemy2_rect.center = (0, (height/2)-10)
+            enemy2_rect.center = (0, (height)- 30)
+
+        #Collider
+
+        #if hero.rect.colliderect(enemy1_rect, enemy2_rect):
+        #    print(hero)
+      
         
 
         
@@ -158,7 +171,7 @@ def main():
         #print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
 
         # Render text to the screen
-        label = myfont.render("By: Isabella and Zach", True, (255,255,0))
+        label = myfont.render("By: Isabella and Zach", True, yellow)
         screen.blit(label, (607,800))
         
         # Bring drawn changes to the front

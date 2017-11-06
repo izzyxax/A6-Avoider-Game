@@ -51,7 +51,7 @@ def main():
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
 
-    world = world.covert()
+    
     # The frame_count counts all the frames that have passed since the start of the game.
     # Look at the print statements in the loop to see how to use the count with a mod function
     # to get cycles of different lengths.
@@ -71,7 +71,7 @@ def main():
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
 
-       #Hero: Load Hero/Getting Rect.
+    #Hero: Load Hero/Getting Rect.
     hero = load_piskell_sprite("Hero", "sprite_",4)
     hero_rect = hero[0].get_rect()
     hero_rect.midbottom = (500,800)
@@ -96,10 +96,11 @@ def main():
     frame_number = 0
 
     #Colours
-
+    black = (0,0,0)
     yellow = (255,255,0)
     red = (255,0,0)
     white = (255,255,255)
+    green = (200,100,100)
 
     #Colour ment for transparency
     transparent_wall = (255,255,255,0)
@@ -107,14 +108,27 @@ def main():
 
     
     #Live counter
-   # for living in range(lives):
-   #     size_of_screen = screen.get_rect().width
+
+    Lives = 3
+    
+   #Collision
+ #   def pixel_collision(sprite,sprite_rect, image, color):
+ #       #Figure out where the upper left corner or the sprite_rect is
+ #       x_offset, y-offset = sprite_rect.topleft
+ #       for row_pos in range(sprite.get_height()):
+ #           for col_pos in range(sprite.get_width()):
+ #               if sprite.get_at((col_pos, row_pos)) == image.get_at(col_pos + x_offset,row_pos + y_offset):
+ #                   return True #found collision
+ #       return False
+                
 
     # Loop while the player is still active
     while is_alive:
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                is_alive = False
+            if Lives == 0:
                 is_alive = False
             
         #Can't Spam Key Press it one by one: Hero Movement
@@ -146,19 +160,30 @@ def main():
         if (enemy3_rect.x > width):
             enemy3_rect.center = (0, (height)- 40)
 
-
-        #Collider
-
-        #if hero.rect.colliderect(enemy1_rect, enemy2_rect):
-        #    print(hero)
+        #for living in range(lives):
+            #if lives == 3:
+                #is_alive = True
+            
+            
+       
       
         
 
         
         screen.blit(world, world_rect)
+
+        #Hero_Blit
         screen.blit(hero[frame_number%len(hero)], hero_rect)
+      #  collide_rect = hero_rect.inflate(-20,-20)
+      #  if pixel_collision(hero, hero_rect, screen, black):
+      #      pygame.draw.rect(screen, red, hero_rect, 3)
+      #  else:
+      #      pygame.draw.rect(screen, green, collide_rect, 3)
+        #Enemy Blit
         screen.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
+        #Enemy 2 Blit
         screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
+        #Enemy 3 Blit
         screen.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
 
 

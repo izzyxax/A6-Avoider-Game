@@ -80,16 +80,35 @@ def main():
     #Enemy 1: Load Enemy/Getting Rect.
     enemy1 = load_piskell_sprite("Wagon","sprite_",4)
     enemy1_rect = enemy1[0].get_rect()
-    y1 = enemy1_rect.midleft = (0,600)
-    #print(enemy1)
+    y1 = enemy1_rect.midleft = (0,400)
+    #print(enemy2)
     enemy2 = load_piskell_sprite("Wagon","sprite_",4)
     enemy2_rect = enemy2[0].get_rect()
-    y2 = enemy2_rect.midleft = (0, 400)
+    y2 = enemy2_rect.midleft = (-100, 400)
     #print(enemy3)
     enemy3 = load_piskell_sprite("Wagon","sprite_",4)
     enemy3_rect = enemy3[0].get_rect()
-    y3 = enemy3_rect.midleft = (0, 450)
-
+    y3 = enemy3_rect.midleft = (0, 480)
+    #print(enemy4)
+    enemy4 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy4_rect = enemy4[0].get_rect()
+    y4 = enemy4_rect.midleft = (-90, 500)
+    #print(enemy5)
+    enemy5 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy5_rect = enemy5[0].get_rect()
+    y5 = enemy5_rect.midleft = (-180, 500)
+    #print(enemy6)
+    enemy6 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy6_rect = enemy6[0].get_rect()
+    y6 = enemy6_rect.midleft = (0, 600)
+    #print(enemy7)
+    enemy7 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy7_rect = enemy7[0].get_rect()
+    y7 = enemy7_rect.midleft = (-80, 600)
+    #print(enemy8)
+    enemy8 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy8_rect = enemy8[0].get_rect()
+    y8 = enemy8_rect.midleft = (-200, 600)
     #Speed Of Character: Higher the number faster it goes per pixel/square
     speed = 5
 
@@ -102,11 +121,6 @@ def main():
     red = (255,0,0)
     white = (255,255,255)
     green = (200,100,100)
-
-    #Colour ment for transparency
-    transparent_wall = (255,255,255,0)
-
-
     
     #Live counter
 
@@ -131,12 +145,9 @@ def main():
             if event.type == pygame.QUIT:
                 is_alive = False
                 level_one = False
-        #Map 1
-        screen.blit(world, world_rect)
-        
             
         #Can't Spam Key Press it one by one: Hero Movement
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 hero_rect.move_ip(-speed,0)
                 frame_number += 1
@@ -149,49 +160,65 @@ def main():
             if event.key == pygame.K_DOWN:
                 hero_rect.move_ip(0,speed)
                 frame_number += 1
-        if frame_number >= len(hero):
-            frame_number = 0
+            if frame_number >= len(hero):
+                frame_number = 0
 
-        enemy1_rect.move_ip(speed,0)
+        enemy1_rect.move_ip(speed + 7,0)
         if (enemy1_rect.x > width):
             enemy1_rect.center = y1
-        
-        enemy2_rect.move_ip(speed + 5,0)
+        enemy2_rect.move_ip(speed + 7,0)
         if (enemy2_rect.x > width):
             enemy2_rect.center = y2
-
-        enemy3_rect.move_ip(speed + 7,0)
+        enemy3_rect.move_ip(speed + 10,0)
         if (enemy3_rect.x > width):
             enemy3_rect.center = y3
-
-            
-        #How Many Lives
- #       screen.blit(My_Life_Counter, (100,100))     
-        #You Are Dead
-#        screen.blit(Dead, (450,450)) 
+        enemy4_rect.move_ip(speed + 6,0)
+        if (enemy4_rect.x > width):
+            enemy4_rect.center = y4
+        enemy5_rect.move_ip(speed + 6,0)
+        if (enemy5_rect.x > width):
+            enemy5_rect.center = y5
+        enemy6_rect.move_ip(speed + 9,0)
+        if (enemy6_rect.x > width):
+            enemy6_rect.center = y6
+        enemy7_rect.move_ip(speed + 9,0)
+        if (enemy7_rect.x > width):
+            enemy7_rect.center = y7
+        enemy8_rect.move_ip(speed + 9,0)
+        if (enemy8_rect.x > width):
+            enemy8_rect.center = y8
         
+        #Map 1
+        screen.blit(world, world_rect)
         
-
         #Hero_Blit
         screen.blit(hero[frame_number%len(hero)], hero_rect)
-      #  collide_rect = hero_rect.inflate(-20,-20)
-      #  if pixel_collision(hero, hero_rect, screen, black):
-      #      pygame.draw.rect(screen, red, hero_rect, 3)
-      #  else:
-      #      pygame.draw.rect(screen, green, collide_rect, 3)
+
         #Enemy Blit
         screen.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
         #Enemy 2 Blit
         screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
         #Enemy 3 Blit
         screen.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
-    #Temp line for beta reference
-        pygame.draw.line(screen,(200,100,100),(0,375),(width,375))
+        #Enemy 4 Blit
+        screen.blit(enemy4[frame_number%len(enemy4)], enemy4_rect)
+        #Enemy 5 Blit
+        screen.blit(enemy5[frame_number%len(enemy5)], enemy5_rect)
+        #Enemy 6 Blit
+        screen.blit(enemy6[frame_number%len(enemy6)], enemy6_rect)
+        #Enemy 7 Blit
+        screen.blit(enemy7[frame_number%len(enemy7)], enemy7_rect)
+        #Enemy 7 Blit
+        screen.blit(enemy8[frame_number%len(enemy8)], enemy8_rect)
+        
+        #Temp line for beta reference
+        #pygame.draw.line(screen,(200,100,100),(0,375),(width,375))
 
-
-
-        enemies = [enemy1,enemy2,enemy3]
-        enemies_rect = [enemy1_rect,enemy2_rect,enemy3_rect]
+        py_Line = (hero_rect.x,375)
+        if tuple(hero_rect) < py_Line:
+            #print("Success")
+            level_one =  False
+            
         #Collision
         if hero_rect.colliderect(enemy1_rect):
             lives -= 1
@@ -202,20 +229,21 @@ def main():
         if hero_rect.colliderect(enemy3_rect):
             lives -= 1
             hero_rect.midbottom = (500,800)
-
-
-
-
-
-
-
-        py_Line = (hero_rect.x,375)
-        if tuple(hero_rect) < py_Line:
-            #print("Success")
-            level_one =  False
-
-
-
+        if hero_rect.colliderect(enemy4_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
+        if hero_rect.colliderect(enemy5_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
+        if hero_rect.colliderect(enemy6_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
+        if hero_rect.colliderect(enemy7_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
+        if hero_rect.colliderect(enemy8_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
 
         # You may have sprites with different numbers of frames. We can make cycles
         # of different lengths by using mod on the frame_count. This is easier than
@@ -236,6 +264,7 @@ def main():
             is_alive = False
             level_one = False
             screen.blit(dead,((width/4)+50,height/2))
+            
         label = myfont.render("By: Isabella and Zach", True, yellow)
         dead = myfont.render("You Are Dead", True, red)
         screen.blit(label, (607,800))

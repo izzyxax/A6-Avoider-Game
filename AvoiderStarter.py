@@ -29,6 +29,7 @@ def load_piskell_sprite(sprite_folder_name, sprite_name ,number_of_frames):
 
     rect.center = (new_pos_x, new_pos_y)
 
+
 # The main loop handles most of the game    
 def main():
                              
@@ -80,15 +81,15 @@ def main():
     #Enemy 1: Load Enemy/Getting Rect.
     enemy1 = load_piskell_sprite("Wagon","sprite_",4)
     enemy1_rect = enemy1[0].get_rect()
-    enemy1_rect.midleft = (0,600)
+    y1 = enemy1_rect.midleft = (0,600)
     #print(enemy1)
     enemy2 = load_piskell_sprite("Wagon","sprite_",4)
     enemy2_rect = enemy2[0].get_rect()
-    enemy2_rect.midleft = (0, 400)
+    y2 = enemy2_rect.midleft = (0, 400)
     #print(enemy3)
     enemy3 = load_piskell_sprite("Wagon","sprite_",4)
     enemy3_rect = enemy3[0].get_rect()
-    enemy3_rect.midleft = (0, 450)
+    y3 = enemy3_rect.midleft = (0, 450)
 
     #Speed Of Character: Higher the number faster it goes per pixel/square
     speed = 5
@@ -110,7 +111,7 @@ def main():
     
     #Live counter
 
-    Lives = 3
+    lives = 3
     
    #Collision
  #   def pixel_collision(sprite,sprite_rect, image, color):
@@ -122,26 +123,27 @@ def main():
  #                   return True #found collision
  #       return False
                 
-
+    level_one = False
     # Loop while the player is still active
-    while is_alive:
+    # Level 1
+    while level_one == False:
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_alive = False
 
-        #Checks Fore Hero's Life Counter BUT needs an actual Counter
-            if Lives == 3:
-                My_Life_Counter = my.font.render("Lives: 2", True, red)
+        #Checks For Hero's Life Counter BUT needs an actual Counter
+#            if lives == 3:
+ #               My_Life_Counter = my.font.render("Lives: 2", True, red)
 
-            if Lives == 2:
-                My_Life_Counter = my.font.render("Lives: 2", True, red)
-                is_alive = True
+#            if lives == 2:
+ #               My_Life_Counter = my.font.render("Lives: 2", True, red)
+ #               is_alive = True
                 
-            if Lives == 0:
-                My_Life_Counter = my.font.render("Lives:0", True, red)
-                Dead = myfont.render("You Are Dead", True, red)
-                is_alive = False
+#            if lives == 0:
+#                My_Life_Counter = my.font.render("Lives:0", True, red)
+ #               Dead = myfont.render("You Are Dead", True, red)
+ #               is_alive = False
             
         #Can't Spam Key Press it one by one: Hero Movement
             if event.type == pygame.KEYDOWN:
@@ -162,23 +164,23 @@ def main():
 
         enemy1_rect.move_ip(speed,0)
         if (enemy1_rect.x > width):
-            enemy1_rect.center = (0, height + 60)
+            enemy1_rect.center = y1
         
         enemy2_rect.move_ip(speed + 5,0)
         if (enemy2_rect.x > width):
-            enemy2_rect.center = (0, (height)- 30)
+            enemy2_rect.center = y2
 
         enemy3_rect.move_ip(speed + 7,0)
         if (enemy3_rect.x > width):
-            enemy3_rect.center = (0, (height)- 40)
+            enemy3_rect.center = y3
 
             
         #How Many Lives
-        screen.blit(My_Life_Counter, (100,100))     
+ #       screen.blit(My_Life_Counter, (100,100))     
         #You Are Dead
-        screen.blit(Dead, (450,450)) 
+#        screen.blit(Dead, (450,450)) 
         
-        #Map
+        #Map 1
         screen.blit(world, world_rect)
 
         #Hero_Blit
@@ -194,6 +196,27 @@ def main():
         screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
         #Enemy 3 Blit
         screen.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
+    #Temp line for beta reference
+        pygame.draw.line(screen,(200,100,100),(0,375),(width,375))
+
+
+        enemies = [enemy1,enemy2,enemy3]
+        enemies_rect = [enemy1_rect,enemy2_rect,enemy3_rect]
+        #Collision
+        #if hero_rect.colliderect(enemies_rect):
+ #           print("Success")
+
+
+
+
+
+
+
+        py_Line = (hero_rect.x,375)
+        if tuple(hero_rect) < py_Line:
+            #print("Success")
+            level_one =  True
+
 
 
 

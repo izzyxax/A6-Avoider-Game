@@ -132,15 +132,19 @@ def main():
 
         #Checks Fore Hero's Life Counter BUT needs an actual Counter
             if Lives == 3:
-                My_Life_Counter = my.font.render("Lives: 2", True, red)
-
+                My_Life_Counter = myfont.render("Lives: 3", True, red)
+                screen.blit(My_Life_Counter, (100,100))
+                is_alive = True
+        
             if Lives == 2:
-                My_Life_Counter = my.font.render("Lives: 2", True, red)
+                My_Life_Counter = myfont.render("Lives: 2", True, red)
+                screen.blit(My_Life_Counter, (100,100)) 
                 is_alive = True
                 
             if Lives == 0:
-                My_Life_Counter = my.font.render("Lives:0", True, red)
-                Dead = myfont.render("You Are Dead", True, red)
+                My_Life_Counter = myfont.render("Lives:0", True, red)
+                you_Are_Dead = death_font.render("You Are Dead", True, red)
+                screen.blit(you_Are_Dead, (450,450)) 
                 is_alive = False
             
         #Can't Spam Key Press it one by one: Hero Movement
@@ -173,10 +177,7 @@ def main():
             enemy3_rect.center = (0, (height)- 40)
 
             
-        #How Many Lives
-        screen.blit(My_Life_Counter, (100,100))     
-        #You Are Dead
-        screen.blit(Dead, (450,450)) 
+        
         
         #Map
         screen.blit(world, world_rect)

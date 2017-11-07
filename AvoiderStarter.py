@@ -203,8 +203,8 @@ def main():
         enemies = [enemy1,enemy2,enemy3]
         enemies_rect = [enemy1_rect,enemy2_rect,enemy3_rect]
         #Collision
-        #if hero_rect.colliderect(enemies_rect):
- #           print("Success")
+        if hero_rect.colliderect(enemy1,rect):
+            print("Success")
 
 
 

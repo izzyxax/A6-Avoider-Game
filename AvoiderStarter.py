@@ -36,7 +36,8 @@ def main():
     pygame.init()
 
     # Get a font
-    myfont = pygame.font.SysFont("monospace", 24)
+    myfont = pygame.font.SysFont("monospace", 12)
+    death_font = pygame.font.SysFont("monospace", 32)
 
     # Load in the background image
     world = pygame.image.load("BG.png")
@@ -128,7 +129,18 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_alive = False
+
+        #Checks Fore Hero's Life Counter BUT needs an actual Counter
+            if Lives == 3:
+                My_Life_Counter = my.font.render("Lives: 2", True, red)
+
+            if Lives == 2:
+                My_Life_Counter = my.font.render("Lives: 2", True, red)
+                is_alive = True
+                
             if Lives == 0:
+                My_Life_Counter = my.font.render("Lives:0", True, red)
+                Dead = myfont.render("You Are Dead", True, red)
                 is_alive = False
             
         #Can't Spam Key Press it one by one: Hero Movement
@@ -160,16 +172,13 @@ def main():
         if (enemy3_rect.x > width):
             enemy3_rect.center = (0, (height)- 40)
 
-        #for living in range(lives):
-            #if lives == 3:
-                #is_alive = True
             
-            
-       
-      
+        #How Many Lives
+        screen.blit(My_Life_Counter, (100,100))     
+        #You Are Dead
+        screen.blit(Dead, (450,450)) 
         
-
-        
+        #Map
         screen.blit(world, world_rect)
 
         #Hero_Blit

@@ -133,20 +133,10 @@ def main():
                 level_one = False
         #Map 1
         screen.blit(world, world_rect)
-        #Checks For Hero's Life Counter BUT needs an actual Counter
-        if lives == 3:
-            My_Life_Counter = myfont.render("Lives: 3", True, red)
-        if lives == 2:
-            My_Life_Counter = myfont.render("Lives: 2", True, red)
-        if lives == 1:
-            My_Life_Counter = myfont.render("Lives: 1", True, red)
-        if lives == 0:
-            My_Life_Counter = myfont.render("Lives:0", True, red)
-            is_alive = False
-            level_one = False
+        
             
         #Can't Spam Key Press it one by one: Hero Movement
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 hero_rect.move_ip(-speed,0)
                 frame_number += 1
@@ -159,8 +149,8 @@ def main():
             if event.key == pygame.K_DOWN:
                 hero_rect.move_ip(0,speed)
                 frame_number += 1
-            if frame_number >= len(hero):
-                frame_number = 0
+        if frame_number >= len(hero):
+            frame_number = 0
 
         enemy1_rect.move_ip(speed,0)
         if (enemy1_rect.x > width):
@@ -234,13 +224,22 @@ def main():
         #print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
 
         # Render text to the screen
+        #Checks For Hero's Life Counter BUT needs an actual Counter
+        if lives == 3:
+            My_Life_Counter = myfont.render("Lives: 3", True, red)
+        if lives == 2:
+            My_Life_Counter = myfont.render("Lives: 2", True, red)
+        if lives == 1:
+            My_Life_Counter = myfont.render("Lives: 1", True, red)
+        if lives == 0:
+            My_Life_Counter = myfont.render("Lives:0", True, red)
+            is_alive = False
+            level_one = False
+            screen.blit(dead,((width/4)+50,height/2))
         label = myfont.render("By: Isabella and Zach", True, yellow)
         dead = myfont.render("You Are Dead", True, red)
         screen.blit(label, (607,800))
         screen.blit(My_Life_Counter,(10,10))
-        if lives == 0:
-            screen.blit(dead,(width/2,height/2))
-            time.sleep(10)
         # Bring drawn changes to the front
         pygame.display.update()
 
@@ -251,6 +250,11 @@ def main():
         # can be inspected. You should change this speed. Something like 30 is more normal.
         clock.tick(60)
 
+    
+    if is_alive == False:
+        time.sleep(5)#added so that the You are dead or Success appears
+
+    #while level_one == False:
     # This happens once the loop is finished - the game is over.
     pygame.quit()
     sys.exit()

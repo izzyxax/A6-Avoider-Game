@@ -1,8 +1,7 @@
 ## Starter code for an avoider game.
 # University of Utah, David Johnson, 2017.
 # This code, or code derived from this code, may not be shared without permission.
-
-import sys, pygame, math
+import sys, pygame, math, time
 
 # This function loads a series of sprite images stored in a folder with a
 # consistent naming pattern: sprite_# or sprite_##. It returns a list of the images.
@@ -123,42 +122,43 @@ def main():
  #                   return True #found collision
  #       return False
                 
-    level_one = False
+    level_one = True
     # Loop while the player is still active
     # Level 1
-    while level_one == False:
+    while level_one == True:
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_alive = False
-
+                level_one = False
+        #Map 1
+        screen.blit(world, world_rect)
         #Checks For Hero's Life Counter BUT needs an actual Counter
-#            if lives == 3:
- #               My_Life_Counter = my.font.render("Lives: 2", True, red)
-
-#            if lives == 2:
- #               My_Life_Counter = my.font.render("Lives: 2", True, red)
- #               is_alive = True
-                
-#            if lives == 0:
-#                My_Life_Counter = my.font.render("Lives:0", True, red)
- #               Dead = myfont.render("You Are Dead", True, red)
- #               is_alive = False
+        if lives == 3:
+            My_Life_Counter = myfont.render("Lives: 3", True, red)
+        if lives == 2:
+            My_Life_Counter = myfont.render("Lives: 2", True, red)
+        if lives == 1:
+            My_Life_Counter = myfont.render("Lives: 1", True, red)
+        if lives == 0:
+            My_Life_Counter = myfont.render("Lives:0", True, red)
+            is_alive = False
+            level_one = False
             
         #Can't Spam Key Press it one by one: Hero Movement
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    hero_rect.move_ip(-speed,0)
-                    frame_number += 1
-                if event.key == pygame.K_RIGHT:
-                    hero_rect.move_ip(speed,0)
-                    frame_number += 1
-                if event.key == pygame.K_UP:
-                    hero_rect.move_ip(0,-speed)
-                    frame_number += 1
-                if event.key == pygame.K_DOWN:
-                    hero_rect.move_ip(0,speed)
-                    frame_number += 1
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                hero_rect.move_ip(-speed,0)
+                frame_number += 1
+            if event.key == pygame.K_RIGHT:
+                hero_rect.move_ip(speed,0)
+                frame_number += 1
+            if event.key == pygame.K_UP:
+                hero_rect.move_ip(0,-speed)
+                frame_number += 1
+            if event.key == pygame.K_DOWN:
+                hero_rect.move_ip(0,speed)
+                frame_number += 1
             if frame_number >= len(hero):
                 frame_number = 0
 
@@ -180,8 +180,7 @@ def main():
         #You Are Dead
 #        screen.blit(Dead, (450,450)) 
         
-        #Map 1
-        screen.blit(world, world_rect)
+        
 
         #Hero_Blit
         screen.blit(hero[frame_number%len(hero)], hero_rect)
@@ -200,11 +199,19 @@ def main():
         pygame.draw.line(screen,(200,100,100),(0,375),(width,375))
 
 
+
         enemies = [enemy1,enemy2,enemy3]
         enemies_rect = [enemy1_rect,enemy2_rect,enemy3_rect]
         #Collision
-        if hero_rect.colliderect(enemy1,rect):
-            print("Success")
+        if hero_rect.colliderect(enemy1_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
+        if hero_rect.colliderect(enemy2_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
+        if hero_rect.colliderect(enemy3_rect):
+            lives -= 1
+            hero_rect.midbottom = (500,800)
 
 
 
@@ -215,7 +222,7 @@ def main():
         py_Line = (hero_rect.x,375)
         if tuple(hero_rect) < py_Line:
             #print("Success")
-            level_one =  True
+            level_one =  False
 
 
 
@@ -228,8 +235,12 @@ def main():
 
         # Render text to the screen
         label = myfont.render("By: Isabella and Zach", True, yellow)
+        dead = myfont.render("You Are Dead", True, red)
         screen.blit(label, (607,800))
-        
+        screen.blit(My_Life_Counter,(10,10))
+        if lives == 0:
+            screen.blit(dead,(width/2,height/2))
+            time.sleep(10)
         # Bring drawn changes to the front
         pygame.display.update()
 

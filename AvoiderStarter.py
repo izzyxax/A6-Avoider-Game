@@ -41,16 +41,21 @@ def main():
 
     # Load in the background image
     world = pygame.image.load("BG.png")
+    world2 = pygame.image.load("BG2.png")
     #Big_rect = world.get_rect()
 
     # Store window width and height in different forms for easy access
     world_size = world.get_size()
+    world2_size = world2.get_size()
+    
 
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
+    world2_rect = world2.get_rect()
     
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
+    screen2 = pygame.display.set_mode(world2_size)
 
     
     # The frame_count counts all the frames that have passed since the start of the game.
@@ -64,9 +69,6 @@ def main():
     # The game should not start until the start color is clicked. Until then game_started is False
     game_started = False
 
-    # is_alive means that the game loop should continue. Winning or losing the game sets is_alive to False.
-    is_alive = True
-
     map_tile_width = 30
     map_tile_height = 20
     tile_size = 32
@@ -75,8 +77,7 @@ def main():
     #Hero: Load Hero/Getting Rect.
     hero = load_piskell_sprite("Hero", "sprite_",4)
     hero_rect = hero[0].get_rect()
-    hero_rect.midbottom = (500,800)
-    #print(hero)
+
     #Enemy 1: Load Enemy/Getting Rect.
     enemy1 = load_piskell_sprite("Wagon","sprite_",4)
     enemy1_rect = enemy1[0].get_rect()
@@ -88,7 +89,7 @@ def main():
     #print(enemy3)
     enemy3 = load_piskell_sprite("Wagon","sprite_",4)
     enemy3_rect = enemy3[0].get_rect()
-    y3 = enemy3_rect.midleft = (0, 480)
+    y3 = enemy3_rect.midleft = (0, 700)
     #print(enemy4)
     enemy4 = load_piskell_sprite("Wagon","sprite_",4)
     enemy4_rect = enemy4[0].get_rect()
@@ -109,6 +110,14 @@ def main():
     enemy8 = load_piskell_sprite("Wagon","sprite_",4)
     enemy8_rect = enemy8[0].get_rect()
     y8 = enemy8_rect.midleft = (-200, 600)
+    #print(enemy9)
+    enemy9 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy9_rect = enemy9[0].get_rect()
+    y9 = enemy9_rect.midleft = (-400, 500)
+    #print(enemy10)
+    enemy10 = load_piskell_sprite("Wagon","sprite_",4)
+    enemy10_rect = enemy10[0].get_rect()
+    y10 = enemy10_rect.midleft = (-400, 480)
     #Speed Of Character: Higher the number faster it goes per pixel/square
     speed = 5
 
@@ -121,10 +130,7 @@ def main():
     red = (255,0,0)
     white = (255,255,255)
     green = (200,100,100)
-    
-    #Live counter
 
-    lives = 3
     
    #Collision
  #   def pixel_collision(sprite,sprite_rect, image, color):
@@ -135,155 +141,319 @@ def main():
  #               if sprite.get_at((col_pos, row_pos)) == image.get_at(col_pos + x_offset,row_pos + y_offset):
  #                   return True #found collision
  #       return False
+    quit_game = False
+    while quit_game == False:
+        
+        # is_alive means that the game loop should continue. Winning or losing the game sets is_alive to False.
+        is_alive = True
+        lives = 3
+        
+        #print(hero)
+        hero_rect.midbottom = (500,800)
+        # Level 1
+        level_one = True
+        while level_one == True and quit_game == False:
+            # Check events by looping over the list of events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    quit_game = True
                 
-    level_one = True
-    # Loop while the player is still active
-    # Level 1
-    while level_one == True:
-        # Check events by looping over the list of events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            #Can't Spam Key Press it one by one: Hero Movement
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    hero_rect.move_ip(-speed,0)
+                    frame_number += 1
+                if event.key == pygame.K_RIGHT:
+                    hero_rect.move_ip(speed,0)
+                    frame_number += 1
+                if event.key == pygame.K_UP:
+                    hero_rect.move_ip(0,-speed)
+                    frame_number += 1
+                if event.key == pygame.K_DOWN:
+                    hero_rect.move_ip(0,speed)
+                    frame_number += 1
+                if frame_number >= len(hero):
+                    frame_number = 0
+
+            enemy1_rect.move_ip(speed + 7,0)
+            if (enemy1_rect.x > width):
+                enemy1_rect.center = y1
+            enemy2_rect.move_ip(speed + 7,0)
+            if (enemy2_rect.x > width):
+                enemy2_rect.center = y2
+            enemy3_rect.move_ip(speed + 10,0)
+            if (enemy3_rect.x > width):
+                enemy3_rect.center = y3
+            enemy4_rect.move_ip(speed + 6,0)
+            if (enemy4_rect.x > width):
+                enemy4_rect.center = y4
+            enemy5_rect.move_ip(speed + 6,0)
+            if (enemy5_rect.x > width):
+                enemy5_rect.center = y5
+            enemy6_rect.move_ip(speed + 9,0)
+            if (enemy6_rect.x > width):
+                enemy6_rect.center = y6
+            enemy7_rect.move_ip(speed + 9,0)
+            if (enemy7_rect.x > width):
+                enemy7_rect.center = y7
+            enemy8_rect.move_ip(speed + 9,0)
+            if (enemy8_rect.x > width):
+                enemy8_rect.center = y8
+            enemy9_rect.move_ip(speed + 7,0)
+            if (enemy9_rect.x > width):
+                enemy9_rect.center = y9           
+            enemy10_rect.move_ip(speed + 7,0)
+            if (enemy10_rect.x > width):
+                enemy10_rect.center = y10           
+            #Map 1
+            screen.blit(world, world_rect)
+            
+            #Hero_Blit
+            screen.blit(hero[frame_number%len(hero)], hero_rect)
+
+            #Enemy Blit
+            screen.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
+            #Enemy 2 Blit
+            screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
+            #Enemy 3 Blit
+            screen.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
+            #Enemy 4 Blit
+            screen.blit(enemy4[frame_number%len(enemy4)], enemy4_rect)
+            #Enemy 5 Blit
+            screen.blit(enemy5[frame_number%len(enemy5)], enemy5_rect)
+            #Enemy 6 Blit
+            screen.blit(enemy6[frame_number%len(enemy6)], enemy6_rect)
+            #Enemy 7 Blit
+            screen.blit(enemy7[frame_number%len(enemy7)], enemy7_rect)
+            #Enemy 8 Blit
+            screen.blit(enemy8[frame_number%len(enemy8)], enemy8_rect)
+            #Enemy 9 Blit
+            screen.blit(enemy9[frame_number%len(enemy9)], enemy9_rect)
+            #Enemy 10 Blit
+            screen.blit(enemy10[frame_number%len(enemy10)], enemy10_rect)
+        
+            #Temp line for beta reference
+            #pygame.draw.line(screen,(200,100,100),(0,375),(width,375))
+
+            py_Line = (hero_rect.x,375)
+            if tuple(hero_rect) < py_Line:
+                win = death_font.render("Success!", True, red)
+                screen.blit(win,((width/4)+50,height/2))
+                level_one =  False
+                
+            #Collision
+            if hero_rect.colliderect(enemy1_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy2_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy3_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy4_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy5_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy6_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy7_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy8_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy9_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy10_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            # You may have sprites with different numbers of frames. We can make cycles
+            # of different lengths by using mod on the frame_count. This is easier than
+            # maintaining a different frame count variable for each different sprite.
+            #print("Cycle of length 3:", frame_count%3) # counts 0,1,2,0,1,2
+            #print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
+
+            # Render text to the screen
+            #Checks For Hero's Life Counter BUT needs an actual Counter
+            if lives == 3:
+                My_Life_Counter = myfont.render("Lives: 3", True, red)
+            if lives == 2:
+                My_Life_Counter = myfont.render("Lives: 2", True, red)
+            if lives == 1:
+                My_Life_Counter = myfont.render("Lives: 1", True, red)
+            if lives == 0:
+                My_Life_Counter = myfont.render("Lives:0", True, red)
                 is_alive = False
                 level_one = False
+                screen.blit(dead,((width/4)+50,height/2))
+                
+            label = myfont.render("By: Isabella and Zach", True, yellow)
+            dead = myfont.render("You Are Dead", True, red)
+            screen.blit(label, (607,800))
+            screen.blit(My_Life_Counter,(10,10))
+            # Bring drawn changes to the front
+            pygame.display.update()
+
+            # We are basically done this with frame of animation, so update the count.
+            frame_count += 1
+
+            # This tries to force the loop to run at 1/2 fps. The is artifically slow so the output above
+            # can be inspected. You should change this speed. Something like 30 is more normal.
+            clock.tick(60)
+        time.sleep(5)
+        lives = 3
+        hero_rect.midbottom = (500,800)
+        #level 2
+        level_two = True
+        while level_two == True and quit_game == False:
+            # Check events by looping over the list of events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    quit_game = True
+                
+            #Can't Spam Key Press it one by one: Hero Movement
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    hero_rect.move_ip(-speed,0)
+                    frame_number += 1
+                if event.key == pygame.K_RIGHT:
+                    hero_rect.move_ip(speed,0)
+                    frame_number += 1
+                if event.key == pygame.K_UP:
+                    hero_rect.move_ip(0,-speed)
+                    frame_number += 1
+                if event.key == pygame.K_DOWN:
+                    hero_rect.move_ip(0,speed)
+                    frame_number += 1
+                if frame_number >= len(hero):
+                    frame_number = 0
+
+            enemy1_rect.move_ip(speed + 7,0)
+            if (enemy1_rect.x > width):
+                enemy1_rect.center = y1
+            enemy2_rect.move_ip(speed + 7,0)
+            if (enemy2_rect.x > width):
+                enemy2_rect.center = y2
+            enemy3_rect.move_ip(speed + 10,0)
+            if (enemy3_rect.x > width):
+                enemy3_rect.center = y3
+            enemy4_rect.move_ip(speed + 6,0)
+            if (enemy4_rect.x > width):
+                enemy4_rect.center = y4
+            enemy5_rect.move_ip(speed + 6,0)
+            if (enemy5_rect.x > width):
+                enemy5_rect.center = y5
+            enemy6_rect.move_ip(speed + 9,0)
+            if (enemy6_rect.x > width):
+                enemy6_rect.center = y6
+            enemy7_rect.move_ip(speed + 9,0)
+            if (enemy7_rect.x > width):
+                enemy7_rect.center = y7
+            enemy8_rect.move_ip(speed + 9,0)
+            if (enemy8_rect.x > width):
+                enemy8_rect.center = y8
             
-        #Can't Spam Key Press it one by one: Hero Movement
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                hero_rect.move_ip(-speed,0)
-                frame_number += 1
-            if event.key == pygame.K_RIGHT:
-                hero_rect.move_ip(speed,0)
-                frame_number += 1
-            if event.key == pygame.K_UP:
-                hero_rect.move_ip(0,-speed)
-                frame_number += 1
-            if event.key == pygame.K_DOWN:
-                hero_rect.move_ip(0,speed)
-                frame_number += 1
-            if frame_number >= len(hero):
-                frame_number = 0
-
-        enemy1_rect.move_ip(speed + 7,0)
-        if (enemy1_rect.x > width):
-            enemy1_rect.center = y1
-        enemy2_rect.move_ip(speed + 7,0)
-        if (enemy2_rect.x > width):
-            enemy2_rect.center = y2
-        enemy3_rect.move_ip(speed + 10,0)
-        if (enemy3_rect.x > width):
-            enemy3_rect.center = y3
-        enemy4_rect.move_ip(speed + 6,0)
-        if (enemy4_rect.x > width):
-            enemy4_rect.center = y4
-        enemy5_rect.move_ip(speed + 6,0)
-        if (enemy5_rect.x > width):
-            enemy5_rect.center = y5
-        enemy6_rect.move_ip(speed + 9,0)
-        if (enemy6_rect.x > width):
-            enemy6_rect.center = y6
-        enemy7_rect.move_ip(speed + 9,0)
-        if (enemy7_rect.x > width):
-            enemy7_rect.center = y7
-        enemy8_rect.move_ip(speed + 9,0)
-        if (enemy8_rect.x > width):
-            enemy8_rect.center = y8
-        
-        #Map 1
-        screen.blit(world, world_rect)
-        
-        #Hero_Blit
-        screen.blit(hero[frame_number%len(hero)], hero_rect)
-
-        #Enemy Blit
-        screen.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
-        #Enemy 2 Blit
-        screen.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
-        #Enemy 3 Blit
-        screen.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
-        #Enemy 4 Blit
-        screen.blit(enemy4[frame_number%len(enemy4)], enemy4_rect)
-        #Enemy 5 Blit
-        screen.blit(enemy5[frame_number%len(enemy5)], enemy5_rect)
-        #Enemy 6 Blit
-        screen.blit(enemy6[frame_number%len(enemy6)], enemy6_rect)
-        #Enemy 7 Blit
-        screen.blit(enemy7[frame_number%len(enemy7)], enemy7_rect)
-        #Enemy 7 Blit
-        screen.blit(enemy8[frame_number%len(enemy8)], enemy8_rect)
-        
-        #Temp line for beta reference
-        #pygame.draw.line(screen,(200,100,100),(0,375),(width,375))
-
-        py_Line = (hero_rect.x,375)
-        if tuple(hero_rect) < py_Line:
-            #print("Success")
-            level_one =  False
+            #Map 2
+            screen2.blit(world2, world_rect)
             
-        #Collision
-        if hero_rect.colliderect(enemy1_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy2_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy3_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy4_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy5_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy6_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy7_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
-        if hero_rect.colliderect(enemy8_rect):
-            lives -= 1
-            hero_rect.midbottom = (500,800)
+            #Hero_Blit
+            screen2.blit(hero[frame_number%len(hero)], hero_rect)
 
-        # You may have sprites with different numbers of frames. We can make cycles
-        # of different lengths by using mod on the frame_count. This is easier than
-        # maintaining a different frame count variable for each different sprite.
-        #print("Cycle of length 3:", frame_count%3) # counts 0,1,2,0,1,2
-        #print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
-
-        # Render text to the screen
-        #Checks For Hero's Life Counter BUT needs an actual Counter
-        if lives == 3:
-            My_Life_Counter = myfont.render("Lives: 3", True, red)
-        if lives == 2:
-            My_Life_Counter = myfont.render("Lives: 2", True, red)
-        if lives == 1:
-            My_Life_Counter = myfont.render("Lives: 1", True, red)
-        if lives == 0:
-            My_Life_Counter = myfont.render("Lives:0", True, red)
-            is_alive = False
-            level_one = False
-            screen.blit(dead,((width/4)+50,height/2))
+            #Enemy Blit
+            screen2.blit(enemy1[frame_number%len(enemy1)], enemy1_rect)
+            #Enemy 2 Blit
+            screen2.blit(enemy2[frame_number%len(enemy2)], enemy2_rect)
+            #Enemy 3 Blit
+            screen2.blit(enemy3[frame_number%len(enemy3)], enemy3_rect)
+            #Enemy 4 Blit
+            screen2.blit(enemy4[frame_number%len(enemy4)], enemy4_rect)
+            #Enemy 5 Blit
+            screen2.blit(enemy5[frame_number%len(enemy5)], enemy5_rect)
+            #Enemy 6 Blit
+            screen2.blit(enemy6[frame_number%len(enemy6)], enemy6_rect)
+            #Enemy 7 Blit
+            screen2.blit(enemy7[frame_number%len(enemy7)], enemy7_rect)
+            #Enemy 7 Blit
+            screen2.blit(enemy8[frame_number%len(enemy8)], enemy8_rect)
             
-        label = myfont.render("By: Isabella and Zach", True, yellow)
-        dead = myfont.render("You Are Dead", True, red)
-        screen.blit(label, (607,800))
-        screen.blit(My_Life_Counter,(10,10))
-        # Bring drawn changes to the front
-        pygame.display.update()
+            #Temp line for beta reference
+            #pygame.draw.line(screen,(200,100,100),(0,445),(width,445))
 
-        # We are basically done this with frame of animation, so update the count.
-        frame_count += 1
+            py_Line = (hero_rect.x,445)
+            if tuple(hero_rect) < py_Line:
+                win = death_font.render("Success!", True, red)
+                screen.blit(win,((width/4)+50,height/2))
+                level_two = False
 
-        # This tries to force the loop to run at 1/2 fps. The is artifically slow so the output above
-        # can be inspected. You should change this speed. Something like 30 is more normal.
-        clock.tick(60)
+                
+            #Collision
+            if hero_rect.colliderect(enemy1_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy2_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy3_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy4_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy5_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy6_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy7_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
+            if hero_rect.colliderect(enemy8_rect):
+                lives -= 1
+                hero_rect.midbottom = (500,800)
 
-    
-    if is_alive == False:
-        time.sleep(5)#added so that the You are dead or Success appears
+            # You may have sprites with different numbers of frames. We can make cycles
+            # of different lengths by using mod on the frame_count. This is easier than
+            # maintaining a different frame count variable for each different sprite.
+            #print("Cycle of length 3:", frame_count%3) # counts 0,1,2,0,1,2
+            #print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
 
-    #while level_one == False:
+            # Render text to the screen
+            #Checks For Hero's Life Counter BUT needs an actual Counter
+            if lives == 3:
+                My_Life_Counter = myfont.render("Lives: 3", True, red)
+            if lives == 2:
+                My_Life_Counter = myfont.render("Lives: 2", True, red)
+            if lives == 1:
+                My_Life_Counter = myfont.render("Lives: 1", True, red)
+            if lives == 0:
+                My_Life_Counter = myfont.render("Lives:0", True, red)
+                is_alive = False
+                level_two = False
+                level_one = True
+                screen2.blit(dead,((width/4)+50,height/2))
+                
+            label = myfont.render("By: Isabella and Zach", True, yellow)
+            dead = death_font.render("You Are Dead", True, red)
+            screen2.blit(label, (607,800))
+            screen2.blit(My_Life_Counter,(10,10))
+            # Bring drawn changes to the front
+            pygame.display.update()
+
+            # We are basically done this with frame of animation, so update the count.
+            frame_count += 1
+
+            # This tries to force the loop to run at 1/2 fps. The is artifically slow so the output above
+            # can be inspected. You should change this speed. Something like 30 is more normal.
+            clock.tick(60)
+            
+    time.sleep(5)#added so that the You are dead or Success appears
+
     # This happens once the loop is finished - the game is over.
     pygame.quit()
     sys.exit()

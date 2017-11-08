@@ -1,6 +1,18 @@
 ## Starter code for an avoider game.
 # University of Utah, David Johnson, 2017.
 # This code, or code derived from this code, may not be shared without permission.
+
+
+
+#Group: Isabella Perrino and Zach Mills
+#Art: Done by Isabella
+#Coding: Done By Both
+#Music: https://www.playonloop.com/2011-music-loops/aquatic-circus/
+#Game: Avoid The Wagons!
+
+
+
+
 import sys, pygame, math, time
 
 # This function loads a series of sprite images stored in a folder with a
@@ -36,13 +48,13 @@ def main():
     pygame.init()
 
     # Get a font
-    myfont = pygame.font.SysFont("monospace", 12)
+    myfont = pygame.font.SysFont("monospace", 32)
     death_font = pygame.font.SysFont("monospace", 32)
 
     # Load in the background image
     world = pygame.image.load("BG.png")
     world2 = pygame.image.load("BG2.png")
-    #Big_rect = world.get_rect()
+    
 
     # Store window width and height in different forms for easy access
     world_size = world.get_size()
@@ -57,7 +69,12 @@ def main():
     screen = pygame.display.set_mode(world_size)
     screen2 = pygame.display.set_mode(world2_size)
 
-    
+    #TIME FOR SOME 8 BIT MUSIC!!!!
+    pygame.mixer.music.load('POL-aquatic-circus-short.wav')
+    pygame.mixer.music.play(-1)
+
+
+
     # The frame_count counts all the frames that have passed since the start of the game.
     # Look at the print statements in the loop to see how to use the count with a mod function
     # to get cycles of different lengths.
@@ -131,16 +148,6 @@ def main():
     white = (255,255,255)
     green = (200,100,100)
 
-    
-   #Collision
- #   def pixel_collision(sprite,sprite_rect, image, color):
- #       #Figure out where the upper left corner or the sprite_rect is
- #       x_offset, y-offset = sprite_rect.topleft
- #       for row_pos in range(sprite.get_height()):
- #           for col_pos in range(sprite.get_width()):
- #               if sprite.get_at((col_pos, row_pos)) == image.get_at(col_pos + x_offset,row_pos + y_offset):
- #                   return True #found collision
- #       return False
     quit_game = False
     while quit_game == False:
         
@@ -272,11 +279,7 @@ def main():
             if hero_rect.colliderect(enemy10_rect):
                 lives -= 1
                 hero_rect.midbottom = (500,800)
-            # You may have sprites with different numbers of frames. We can make cycles
-            # of different lengths by using mod on the frame_count. This is easier than
-            # maintaining a different frame count variable for each different sprite.
-            #print("Cycle of length 3:", frame_count%3) # counts 0,1,2,0,1,2
-            #print("Cycle of length 4:", frame_count%4) # counts 0,1,2,3,0,1,2,3
+           
 
             # Render text to the screen
             #Checks For Hero's Life Counter BUT needs an actual Counter
@@ -291,11 +294,17 @@ def main():
                 is_alive = False
                 level_one = False
                 screen.blit(dead,((width/4)+50,height/2))
-                
+
+            #A Bunch Of Text
+            Avoid_Wagons = myfont.render("Avoid the wagons!",True, white)
+            Wat_Level = myfont.render("Level:1", True, white)    
             label = myfont.render("By: Isabella and Zach", True, yellow)
             dead = myfont.render("You Are Dead", True, red)
-            screen.blit(label, (607,800))
+            screen.blit(Avoid_Wagons, (10,800))
+            screen.blit(label, (507,800))
             screen.blit(My_Life_Counter,(10,10))
+            screen.blit(Wat_Level, (600,10))
+
             # Bring drawn changes to the front
             pygame.display.update()
 
@@ -437,11 +446,18 @@ def main():
                 level_two = False
                 level_one = True
                 screen2.blit(dead,((width/4)+50,height/2))
-                
+
+
+            #A Bunch Of Text
+            Avoid_Wagons = myfont.render("Avoid the wagons!",True, white)    
             label = myfont.render("By: Isabella and Zach", True, yellow)
             dead = death_font.render("You Are Dead", True, red)
-            screen2.blit(label, (607,800))
+            Wat_Level = myfont.render("Level:2", True, white)
+            screen.blit(Avoid_Wagons, (10,800))
+            screen2.blit(label, (507,800))
             screen2.blit(My_Life_Counter,(10,10))
+            screen2.blit(Wat_Level, (500,10))
+
             # Bring drawn changes to the front
             pygame.display.update()
 
@@ -450,7 +466,7 @@ def main():
 
             # This tries to force the loop to run at 1/2 fps. The is artifically slow so the output above
             # can be inspected. You should change this speed. Something like 30 is more normal.
-            clock.tick(60)
+            clock.tick(30)
             
     time.sleep(5)#added so that the You are dead or Success appears
 
